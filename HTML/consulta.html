@@ -1,0 +1,136 @@
+<html>
+	<head>
+    <meta charset="utf-8" />
+		<title>Orçamento pessoal</title>
+
+    <link rel="stylesheet/less" type="text/css" href="../LESS/styles.less" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/less@4" ></script>
+    <script src="../JS/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    
+    <script src="../JS/scripit.js"></script>
+	</head>
+
+  <body onload="carregarListaDespesas()">
+    <header id="header" class="header">
+      <nav class="nav__top">
+        <a class="" href="#">
+           <img src="../imagens/logo.png" width="50" height="35" alt="Orçamento pessoal">
+        </a>
+        <!-- 
+        <button class="" >
+          <span class=""></span>
+        </button>
+        -->
+        <ul class="nav__item">
+          <li class="">
+            <a class="" href="index.html">Cadastro</a>
+          </li>
+          <li class="">
+            <a class="" href="consulta.html">Consulta</a>
+          </li>
+        </ul>
+          
+      </nav>
+    </header>
+    <main class="container__main">
+      <section class="title__container">
+        <h1 class="">Consultar despesa</h1>
+      </section>
+
+      <section class="container__form">
+        <form class="display__form">
+          <div class="">
+            <select class="itens__form" id="ano">
+              <option value="">Ano</option>
+              <option value="2020">2020</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+            </select>
+          </div>
+
+          <div class="">
+            <select class="itens__form" id="mes">
+              <option value="">Mês</option>
+              <option value="01">Janeiro</option>
+              <option value="02">Fevereiro</option>
+              <option value="03">Março</option>
+              <option value="04">Abril</option>
+              <option value="05">Maio</option>
+              <option value="06">Junho</option>
+              <option value="07">Julho</option>
+              <option value="08">Agosto</option>
+              <option value="09">Setembro</option>
+              <option value="10">Outubro</option>
+              <option value="11">Novembro</option>
+              <option value="12">Dezembro</option>
+            </select>
+          </div>
+          
+          <div class="">
+            <input type="text" class="itens__form" placeholder="Dia" id="dia" />
+          </div>
+          
+          <div class="iten__tipo">
+            <select class="itens__form" id="tipo">
+              <option value="">Tipo</option>
+              <option value="1">Alimentação</option>
+              <option value="2">Educação</option>
+              <option value="3">Lazer</option>
+              <option value="4">Saúde</option>
+              <option value="5">Transporte</option>
+            </select>
+          </div>
+        
+          <div class="iten__desc">
+            <input type="text" class="itens__form" placeholder="Descrição" id="descricao" />
+          </div>
+          
+          <div class="">
+            <input type="number" class="itens__form" placeholder="Valor" id="valor" />
+          </div>
+          
+          <div class="itens__form btn__register">
+            <button class="btn__iten" id="button" onclick="pesquisaDespesas()" type="button">
+              <img style="width: 16px;" src="../imagens/icon-search.png"></img>
+            </button>
+          </div>
+        </form>
+      </section>
+      <section class="container__table">
+        <table  class="table" >
+          <thead id="table-head">
+            <tr>
+              <th>Data</th>
+              <th>Tipo</th>
+              <th>Descrição</th>
+              <th>Valor</th>
+              <th></th>
+              <th></th>
+              
+            </tr>
+            
+          </thead>
+                
+          <tbody id="listaDespesas">
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+
+            </tr>
+            <tr>
+            </tr>
+          </tbody>                
+        </table>
+      </section> 
+    </main>    
+  </body>	
+
+</html>
