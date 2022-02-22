@@ -33,8 +33,7 @@ class Despesa {
             valor : this.valor,
             function : 'add'
         };
-
-        return objResult
+        return objResult;
     }
 }
 
@@ -46,7 +45,7 @@ function registerProduct() {
     let despesa = new Despesa(arrayElements);
 
    if(despesa.validacaoDados()) {
-        const objResult = despesa.enviaDadosBD()
+        const objResult = despesa.enviaDadosBD();
         
         $.ajax({
             url: '../PHP/controller_despesa.php',
@@ -57,17 +56,20 @@ function registerProduct() {
                 $('#content-main').addClass('modal__actived');
                 $('#modal').addClass('success');
                 $('#title_modal').html('Secesso');
-                $('#content_modal').html('Sua despesa foi salva com sucesso!! Click no botão "VOLTAR" para registrar novas despesas.');
+                $('#content_modal').html('Sua despesa foi salva com sucesso!! Click no botão "VOLTAR" para registrar novas despesas.'); 
+                arrayElements.value = ''
             },  
             error: () => {
                 $('#content-main').addClass('modal__actived');
                 $('#modal').addClass('failed');
                 $('#title_modal').html('Ops...Algo deu errado');
-                $('#content_modal').html('Ouve algum erro!!! Porfavor tente mais tarde, se o erro persistir entre em contato com o nosso suporte.');           
+                $('#content_modal').html('Ouve algum erro!!! Porfavor tente mais tarde, se o erro persistir entre em contato com o nosso suporte.');
+                           
             }           
         })
+        
     } else {
-        despesa.validaCampos(arrayElements)
+        despesa.validaCampos(arrayElements);
     }
 }
 
@@ -75,6 +77,7 @@ function exitModal() {
     $('#content-main').removeClass('modal__actived');
     $('#modal').removeClass('failed');
     $('#modal').removeClass('success');
+    $('#modal').removeClass('actived');
 }
 
 function carregarListaDespesas(){
@@ -97,30 +100,58 @@ function listDespesaAll(listAllObj) {
     listAllObj.forEach(function(d){
         let linha = listaDespesas.insertRow();
 
-        linha.id = `id_despesa_${d.id_despesa}`
+        linha.id = `id_list_${d.id_despesa}`
 
         linha.insertCell(0).innerHTML = d.data_despesa
         linha.insertCell(1).innerHTML = d.tipo
         linha.insertCell(2).innerHTML = d.descricao
         linha.insertCell(3).innerHTML = d.valor.toFixed(2)
 
-        let btn = document.createElement("button");
-        btn.className = 'btn-td btn-closed';
-        btn.innerHTML = '<img class="img" src="../imagens/icon-delete.png">';
+        let btn1 = document.createElement("button");
+        btn1.className = 'btn-td btn-closed';
+        btn1.innerHTML = '<img class="img" src="../imagens/icon-delete.png">';
+        btn1.id = `id_delet_${d.id_despesa}`
+        btn1.onclick = function(){
+            let id = this.id.replace('id_delet_', '');
+            $.ajax({
+                url: '../PHP/controller_despesa.php',
+                type: 'POST',
+                data: {
+                    function: 'delet',
+                    id_despesa: id
+                },
+                dataType: 'json',
+                success: () => {
+                    $('#content-main').addClass('modal__actived');
+                    $('#modal').addClass('success');
+                    $('#title_modal').html('Sucesso');
+                    $('#content_modal').html('Despesa excluida com sucesso! Click em voltar para autalizar os dados.'); 
+                },  
+                error: () => {
+                    $('#content-main').addClass('modal__actived');
+                    $('#modal').addClass('failed');
+                    $('#title_modal').html('Ops...Algo deu errado');
+                    $('#content_modal').html('Ouve algum erro!!! Porfavor tente mais tarde, se o erro persistir entre em contato com o nosso suporte.'); 
+                } 
+            })  
+            console.log(id)
+        }
+
         
-        let btn2 = document.createElement("button");
-        btn2.className = 'btn-td btn-edit';
-        btn2.innerHTML = '<img class="img" src="../imagens/edit.png">';
-        
-        let colDelet = linha.insertCell(4)
-        let colEdit = linha.insertCell(5)
+        let colDelet = linha.insertCell(4);
         colDelet.className = 'td__btn'
-        colEdit.className = ''
-        colDelet.append(btn);
-        colEdit.append(btn2);
+        colDelet.append(btn1);
+
         
     })
 }
+
+function recarregaListaDespesa() {
+    $('#listaDespesas').html()
+    carregarListaDespesas()
+    exitModal()
+}
+
 
 
 

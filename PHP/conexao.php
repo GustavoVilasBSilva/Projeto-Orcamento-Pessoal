@@ -1,18 +1,17 @@
 <?php 
 
+require '../global.php';
+
 
 class Conexao {
-    private $host = 'localhost';
-    private $dbname = 'app_orcamento';
-    private $usuario = 'root';
-    private $senha = '';
 
     public function conectar() {
         try {
+
             $conexao = new PDO (
-                "mysql:host=$this->host;dbname=$this->dbname",
-                "$this->usuario",
-                "$this->senha"
+                'mysql:host='.$_ENV['DB_HOST'].';dbname='.$_ENV['DB_NAME'],
+                $_ENV['DB_USER'],
+                $_ENV['DB_PASS']
             );
 
             return $conexao;

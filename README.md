@@ -15,12 +15,13 @@ Esse projeto te ajuda a ter um controle sobre suas despesas, podendo adicionar, 
 * HTML
 * JavaScripit
 * LESS
+* JQuery
 * PHP
 * MySQL
 
 <hr>
 <br>
-<br>
+
 
 
 ### AINDA ESTOU TRABALHANDO NESSE PROJETO!!!

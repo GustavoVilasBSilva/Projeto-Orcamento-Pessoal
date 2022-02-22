@@ -46,6 +46,18 @@ class DespesaService {
 
     }
     public function remover() {
+        try {
+            $query = 'delete from td_despesas where id_despesa = :id_despesa';
+            
+            $stmt = $this->conexao->prepare($query);
+            $stmt->bindValue(':id_despesa', $this->despesa->__get('id_despesa'));
+            
+            $stmt->execute();
+            
+            echo true;
+        } catch (Exception $e) {   
+            echo false;
+        }
 
     }
 

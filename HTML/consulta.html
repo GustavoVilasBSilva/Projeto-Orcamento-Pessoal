@@ -38,7 +38,7 @@
           
       </nav>
     </header>
-    <main class="container__main">
+    <main id="content-main" class="container__main">
       <section class="title__container">
         <h1 class="">Consultar despesa</h1>
       </section>
@@ -123,14 +123,20 @@
               <td></td>
               <td></td>
               <td></td>
-
             </tr>
             <tr>
             </tr>
           </tbody>                
         </table>
       </section> 
-    </main>    
+    </main>
+    <section id="modal" class="container__modal">
+      <h2 id="title_modal"></h2>
+      <p id="content_modal"></p>
+      
+      <button class="" onclick="recarregaListaDespesa()">Voltar</button>
+          
+    </section>     
   </body>	
 
 </html>

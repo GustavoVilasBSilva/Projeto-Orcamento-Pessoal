@@ -20,8 +20,6 @@
         $despesaService = new DespesaService($conexao, $despesa);
         $despesaService->inserir();
     }
-    
-
     if($_POST['function'] === 'listAll'){
 
         $despesa = new Despesa();
@@ -31,6 +29,15 @@
         $listAll = $despesaService->recuperar();
         
         echo json_encode($listAll);
+    }
+    if($_POST['function'] === 'delet'){
+        $despesa = new Despesa();
+        $conexao = new Conexao();
+
+        $despesa->__set('id_despesa', $_POST['id_despesa']);
+        
+        $despesaService = new DespesaService($conexao, $despesa);
+        $despesaService->remover();    
     }
 
 
