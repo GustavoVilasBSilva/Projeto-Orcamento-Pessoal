@@ -21,4 +21,7 @@ class Conexao {
     }
 }
 
+$conectar = new Conexao();
+$conectar->conectar();
+
 ?>

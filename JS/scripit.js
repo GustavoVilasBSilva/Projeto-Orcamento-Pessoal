@@ -1,5 +1,6 @@
 
 
+
 class Despesa {
     constructor(array){
         this.data = `${array[0].value}-${array[1].value}-${array[2].value}`;
@@ -37,11 +38,95 @@ class Despesa {
     }
 }
 
+class Elements {
+    constructor() {
+        this.modal
+        this.btnDelet
+    }
 
-function registerProduct() {
+    createModal(parameter) {
+        this.modal = document.createElement("section")
+        this.modal.id = 'modal'
+        this.modal.className = 'container__modal'
+        const title = document.createElement('h3')
+        const text = document.createElement('p')
+        const btn = document.createElement('button')
+        const btn2 = document.createElement('button')
+        btn.innerHTML = 'Voltar'
+        btn2.innerHTML = 'Voltar'
+        btn.onclick = () => {
+            $('#modal').remove()
+            $('#content-main').removeClass('modal__actived')
+        }
+        btn2.onclick = () => {
+            $('#modal').remove()
+            $('#content-main').removeClass('modal__actived')
+            $('#listaDespesas').html()
+            carregarListaDespesas()
+        }
+        if(parameter === 'success'){
+            this.modal.classList.add('success')
+            title.innerText = 'Secesso'
+            text.innerText = 'Sua despesa foi salva com sucesso!! Click no botão "VOLTAR" para registrar novas despesas.'
+            this.modal.append(title, text, btn)
+            return this.modal
+        } else if(parameter === 'failed'){
+            this.modal.classList.add('failed')
+            title.innerText = 'Ops...Algo deu errado'
+            text.innerText = 'Ouve algum erro!!! Porfavor tente mais tarde, se o erro persistir entre em contato com o nosso suporte.'
+            this.modal.append(title, text, btn)
+            return this.modal
+        } else if(parameter === 'deletSuccess'){
+            this.modal.classList.add('actived')
+            title.innerText = 'Sucesso'
+            text.innerText = 'Despesa excluida com sucesso! Click em voltar para autalizar os dados.'
+            this.modal.append(title, text, btn2)
+            return this.modal
+        }
+    }    
+
+    createBtnDelet(idN){
+        this.btnDelet = document.createElement("button");
+        this.btnDelet.className = 'btn-td btn-closed';
+        this.btnDelet.id = `id_delet_${idN}`
+        this.btnDelet.innerHTML = '<img class="img" src="../imagens/icon-delete.png">';
+        this.btnDelet.onclick = () => {
+            console.log(idN)
+            let id = idN
+            $.ajax({
+                url: '../PHP/controller_despesa.php',
+                type: 'POST',
+                data: {
+                    function: 'delet',
+                    id_despesa: id
+                },
+                dataType: 'json',
+                success: result => {
+                    console.log(result)
+                    $('#content-main').addClass('modal__actived')
+                    let modal = allElements.createModal('deletSuccess')
+                    $('body').prepend(modal)
+                },  
+                error: () => {
+                    $('#content-main').addClass('modal__actived')
+                    let modal = allElements.createModal('failed')
+                    $('body').prepend(modal)
+                } 
+            })
+
+        }
+        return this.btnDelet
+    }
+
+}
+
+let allElements = new Elements()
+
+
+
+function registerProduct() {  
     const el = $('form div').children();
     const arrayElements = [el[0], el[1], el[2], el[3], el[4], el[5]];
-    
     let despesa = new Despesa(arrayElements);
 
    if(despesa.validacaoDados()) {
@@ -53,18 +138,15 @@ function registerProduct() {
             data: objResult,
             dataType: 'json',
             success: () => {
-                $('#content-main').addClass('modal__actived');
-                $('#modal').addClass('success');
-                $('#title_modal').html('Secesso');
-                $('#content_modal').html('Sua despesa foi salva com sucesso!! Click no botão "VOLTAR" para registrar novas despesas.'); 
-                arrayElements.value = ''
+                $('#content-main').addClass('modal__actived')
+                let modal = allElements.createModal('success')
+                $('body').prepend(modal)
+                arrayElements.forEach((e) => {e.value = ''})
             },  
             error: () => {
-                $('#content-main').addClass('modal__actived');
-                $('#modal').addClass('failed');
-                $('#title_modal').html('Ops...Algo deu errado');
-                $('#content_modal').html('Ouve algum erro!!! Porfavor tente mais tarde, se o erro persistir entre em contato com o nosso suporte.');
-                           
+                $('#content-main').addClass('modal__actived')
+                let modal = allElements.createModal('failed')
+                $('body').prepend(modal)
             }           
         })
         
@@ -73,14 +155,8 @@ function registerProduct() {
     }
 }
 
-function exitModal() {
-    $('#content-main').removeClass('modal__actived');
-    $('#modal').removeClass('failed');
-    $('#modal').removeClass('success');
-    $('#modal').removeClass('actived');
-}
-
 function carregarListaDespesas(){
+
     $.ajax({
         url: '../PHP/controller_despesa.php',
         type: 'POST',
@@ -107,51 +183,31 @@ function listDespesaAll(listAllObj) {
         linha.insertCell(2).innerHTML = d.descricao
         linha.insertCell(3).innerHTML = d.valor.toFixed(2)
 
-        let btn1 = document.createElement("button");
-        btn1.className = 'btn-td btn-closed';
-        btn1.innerHTML = '<img class="img" src="../imagens/icon-delete.png">';
-        btn1.id = `id_delet_${d.id_despesa}`
-        btn1.onclick = function(){
-            let id = this.id.replace('id_delet_', '');
-            $.ajax({
-                url: '../PHP/controller_despesa.php',
-                type: 'POST',
-                data: {
-                    function: 'delet',
-                    id_despesa: id
-                },
-                dataType: 'json',
-                success: () => {
-                    $('#content-main').addClass('modal__actived');
-                    $('#modal').addClass('success');
-                    $('#title_modal').html('Sucesso');
-                    $('#content_modal').html('Despesa excluida com sucesso! Click em voltar para autalizar os dados.'); 
-                },  
-                error: () => {
-                    $('#content-main').addClass('modal__actived');
-                    $('#modal').addClass('failed');
-                    $('#title_modal').html('Ops...Algo deu errado');
-                    $('#content_modal').html('Ouve algum erro!!! Porfavor tente mais tarde, se o erro persistir entre em contato com o nosso suporte.'); 
-                } 
-            })  
-            console.log(id)
-        }
-
+        let btn = allElements.createBtnDelet(d.id_despesa)
         
         let colDelet = linha.insertCell(4);
         colDelet.className = 'td__btn'
-        colDelet.append(btn1);
-
-        
+        colDelet.append(btn);
     })
 }
+/*
+function filter() {
+    const el = $('#form div').children();
+    const arrayElements = [el[0], el[1], el[2], el[3], el[4], el[5]];
+    const elements = [];
 
-function recarregaListaDespesa() {
-    $('#listaDespesas').html()
-    carregarListaDespesas()
-    exitModal()
+    for (const i in arrayElements) {
+        const element = arrayElements[i];
+        if (element.value !== '' && element.value !== null && element.value !== undefined) {
+            
+            elements.push(element)
+  
+        }
+    }
+    console.log(elements)
+
 }
-
+*/
 
 
 

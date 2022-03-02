@@ -26,18 +26,18 @@ class DespesaService {
             
             echo true;
             
-        } catch(Exception $e){
+        } catch(PDOException $e){
             echo false;
         }
     }
     public function recuperar() {
         try {
-            $query = 'select * from td_despesas';
+            $query = 'select * from td_despesas order by id_despesa desc';
             $stmt = $this->conexao->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_OBJ);
 
-        } catch (Exception $e) {   
+        } catch (PDOException $e) {   
             echo false;
         }
 
@@ -55,7 +55,7 @@ class DespesaService {
             $stmt->execute();
             
             echo true;
-        } catch (Exception $e) {   
+        } catch (PDOException $e) {   
             echo false;
         }
 

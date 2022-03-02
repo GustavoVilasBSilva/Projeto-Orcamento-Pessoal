@@ -18,7 +18,8 @@
         $despesa->__set('valor', $valor);
     
         $despesaService = new DespesaService($conexao, $despesa);
-        $despesaService->inserir();
+
+        echo $despesaService->inserir();
     }
     if($_POST['function'] === 'listAll'){
 

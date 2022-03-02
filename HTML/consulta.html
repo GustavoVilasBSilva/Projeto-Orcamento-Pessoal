@@ -44,7 +44,7 @@
       </section>
 
       <section class="container__form">
-        <form class="display__form">
+        <form id="form" class="display__form">
           <div class="">
             <select class="itens__form" id="ano">
               <option value="">Ano</option>
@@ -96,7 +96,7 @@
           </div>
           
           <div class="itens__form btn__register">
-            <button class="btn__iten" id="button" onclick="pesquisaDespesas()" type="button">
+            <button class="btn__iten" id="button" onclick="filter()" type="button">
               <img style="width: 16px;" src="../imagens/icon-search.png"></img>
             </button>
           </div>
@@ -129,14 +129,7 @@
           </tbody>                
         </table>
       </section> 
-    </main>
-    <section id="modal" class="container__modal">
-      <h2 id="title_modal"></h2>
-      <p id="content_modal"></p>
-      
-      <button class="" onclick="recarregaListaDespesa()">Voltar</button>
-          
-    </section>     
+    </main> 
   </body>	
 
 </html>
