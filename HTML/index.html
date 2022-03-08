@@ -1,6 +1,7 @@
 <html>
 	<head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Orçamento pessoal</title>
 
     <link rel="stylesheet/less" type="text/css" href="../LESS/styles.less" />
@@ -21,19 +22,21 @@
         <a class="" href="#">
            <img src="../imagens/logo.png" width="50" height="35" alt="Orçamento pessoal">
         </a>
-        <!-- 
-        <button class="" >
-          <span class=""></span>
-        </button>
-        -->
-        <ul class="nav__item">
-          <li class="">
-            <a class="" href="index.html">Cadastro</a>
-          </li>
-          <li class="">
-            <a class="" href="consulta.html">Consulta</a>
-          </li>
-        </ul>
+        <div>
+
+          <button id="btn-menu" class="button__menu" >
+            <span class="btn-menu"></span>
+          </button>
+          <ul id="menu-toggle" class="nav__item">
+            
+            <li class="">
+              <a class="" href="index.html">Cadastro</a>
+            </li>
+            <li class="">
+              <a class="" href="consulta.html">Consulta</a>
+            </li>
+          </ul>
+        </div>
           
       </nav>
     </header>
@@ -107,7 +110,7 @@
     
 
 
-
+    <script src="../JS/script-menu.js"></script>
     <script src="../JS/scripit.js"></script>
     <script>
       less = {
